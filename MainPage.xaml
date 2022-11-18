@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:MauiButtonCommandTest1.Converters"
+             x:Class="MauiButtonCommandTest1.MainPage">
+
+    <ContentPage.Resources>
+        <converters:TaskResultConverter x:Key="TaskResultConverter" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Label Text="Command Test" HorizontalOptions="Center"/>
+
+            <Button x:Name="CommandBtn1" 
+                    Text="Test synchronous command" 
+                    Command="{Binding Command1}" 
+                    HorizontalOptions="Center"/>
+
+            <Label x:Name="Command1Result" Text="{Binding Command1Result}" HorizontalOptions="Center"/>
+
+            <Line HorizontalOptions="FillAndExpand" StrokeThickness="5" BackgroundColor="BlueViolet"/>
+            
+            <Label Text="Command 2 Test" HorizontalOptions="Center"/>
+
+            <Button x:Name="CommandBtn2" 
+                    Text="Test asynchronous command" 
+                    Command="{Binding Command2}" 
+                    HorizontalOptions="Center"/>
+
+            <Label x:Name="Command2Result" 
+                   Text="{Binding Command2.ExecutionTask, Converter={StaticResource TaskResultConverter}, Mode=OneWay, FallbackValue='Not yet run!'}"
+                   HorizontalOptions="Center"/>
+
+            <ActivityIndicator HorizontalOptions="Center"
+						       IsVisible="{Binding Command2.IsRunning, Mode=OneWay}"
+						       IsRunning="{Binding Command2.IsRunning, Mode=OneWay}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
